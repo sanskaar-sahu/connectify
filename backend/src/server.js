@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from 'cors'
 import authRouter from "./routes/authRoutes.js"
 import userRouter from './routes/userRoutes.js'
 import chatRouter from "./routes/chatRoutes.js"
@@ -10,6 +11,7 @@ dotenv.config();
 const app = express();
 //middlewares
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))   
 
@@ -23,7 +25,7 @@ app.get("/" , (req, res) => {
 
 app.use('/api/auth' , authRouter);
 app.use('/api/user' , userRouter);
-app.user('/api/chat' , chatRouter);
+app.use('/api/chat' , chatRouter);
 
 app.listen(PORT , async ()=>{
     await connectDB();
